@@ -61,7 +61,6 @@ export default {
     const md = MarkdownIt();
     article.body = md.render(article.body);
 
-    console.log(data);
     return {
       article: data.article,
     };

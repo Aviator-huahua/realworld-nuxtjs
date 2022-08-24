@@ -2,7 +2,7 @@
  * @Author: Aviator_huahua
  * @Date: 2022-08-15 21:16:45
  * @LastEditors: Aviator_huahua
- * @LastEditTime: 2022-08-21 20:10:02
+ * @LastEditTime: 2022-08-24 21:47:50
  * @Description: 
  */
 import {
@@ -125,10 +125,15 @@ export const getComments = slug => {
  * @param {*} data
  * @return {*}
  */
-export const publishComment = slug => {
+export const publishComment = data => {
   return request({
-    method: 'DELETE',
-    url: `/api/articles/${slug}/comments`,
+    method: 'POST',
+    url: `/api/articles/${data.slug}/comments`,
+    data: {
+      comment: {
+        body: data.comment
+      }
+    }
   })
 }
 
@@ -141,5 +146,53 @@ export const deleteComment = data => {
   return request({
     method: 'DELETE',
     url: `/api/articles/${data.slug}/comments/${data.id}`,
+  })
+}
+
+/**
+ * @description: 关注
+ * @param {*} username
+ * @return {*}
+ */
+export const followUser = username => {
+  return request({
+    method: 'POST',
+    url: `/api/profiles/${username}/follow`,
+  })
+}
+
+/**
+ * @description: 取消关注
+ * @param {*} username
+ * @return {*}
+ */
+export const unfollowUser = username => {
+  return request({
+    method: 'DELETE',
+    url: `/api/profiles/${username}/follow`,
+  })
+}
+
+/**
+ * @description: 点赞
+ * @param {*} slug
+ * @return {*}
+ */
+export const favoritePost = slug => {
+  return request({
+    method: 'POST',
+    url: `/api/articles/${slug}/favorite`,
+  })
+}
+
+/**
+ * @description: 取消点赞
+ * @param {*} slug
+ * @return {*}
+ */
+export const unfavoritePost = slug => {
+  return request({
+    method: 'DELETE',
+    url: `/api/articles/${slug}/favorite`,
   })
 }

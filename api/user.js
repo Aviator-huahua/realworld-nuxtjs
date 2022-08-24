@@ -2,7 +2,7 @@
  * @Author: Aviator_huahua
  * @Date: 2022-08-14 17:26:44
  * @LastEditors: Aviator_huahua
- * @LastEditTime: 2022-08-21 15:18:48
+ * @LastEditTime: 2022-08-24 21:13:51
  * @Description: 
  */
 import {request} from '@/plugins/request'
@@ -26,11 +26,10 @@ export const register = (data) => {
 }
 
 // 获取当前用户
-export const getUser = (params) => {
+export const getUser = () => {
   return request({
     url: "/api/user",
     method: "GET",
-    params,
   })
 }
 

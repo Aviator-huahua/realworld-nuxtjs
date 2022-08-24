@@ -2,7 +2,7 @@
  * @Author: Aviator_huahua
  * @Date: 2022-08-21 19:58:15
  * @LastEditors: Aviator_huahua
- * @LastEditTime: 2022-08-21 20:31:01
+ * @LastEditTime: 2022-08-24 21:51:50
  * @Description: 
 -->
 <template>
@@ -14,14 +14,18 @@
           class="form-control"
           placeholder="Write a comment..."
           rows="3"
+          v-model="comment"
         ></textarea>
       </div>
       <div class="card-footer">
         <img
-          src="https://api.realworld.io/images/demo-avatar.png"
+          :src="user.image||'https://s20.lgstatic.com/growth/activity/20210720/1626784734098.jpeg?x-oss-process=style/80'"
           class="comment-author-img"
         />
-        <button class="btn btn-sm btn-primary">
+        <button
+          class="btn btn-sm btn-primary"
+          @click="publishComments"
+        >
           Post Comment
         </button>
       </div>
@@ -68,18 +72,32 @@
 </template>
 
 <script>
-import { getComments } from "@/api/article.js";
+import { getComments, publishComment } from "@/api/article.js";
+import { mapState } from "vuex";
 export default {
   name: "ArticleComments",
   props: ["article"],
   data() {
     return {
       comments: [],
+      comment: "",
     };
   },
-  async mounted() {
-    const { data } = await getComments(this.article.slug);
-    this.comments = data.comments;
+  mounted() {
+    this.initData();
+  },
+  methods: {
+    async publishComments() {
+      await publishComment({ slug: this.article.slug, comment: this.comment });
+      this.initData();
+    },
+    async initData() {
+      const { data } = await getComments(this.article.slug);
+      this.comments = data.comments;
+    },
+  },
+  computed: {
+    ...mapState(["user"]),
   },
 };
 </script>

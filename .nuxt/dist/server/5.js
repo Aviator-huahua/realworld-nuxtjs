@@ -42,7 +42,7 @@ var request = __webpack_require__(5);
  * @Author: Aviator_huahua
  * @Date: 2022-08-14 17:26:44
  * @LastEditors: Aviator_huahua
- * @LastEditTime: 2022-08-21 15:18:48
+ * @LastEditTime: 2022-08-24 21:13:51
  * @Description: 
  */
  // 用户登录
@@ -63,11 +63,10 @@ const register = data => {
   });
 }; // 获取当前用户
 
-const getUser = params => {
+const getUser = () => {
   return Object(request["b" /* request */])({
     url: "/api/user",
-    method: "GET",
-    params
+    method: "GET"
   });
 }; // 更新当前用户
 

@@ -5,23 +5,27 @@ exports.modules = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getArticles; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return getCommonArticles; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getArticles; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return getCommonArticles; });
 /* unused harmony export createArticles */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getArticlesDetail; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return getArticlesDetail; });
 /* unused harmony export updateArticles */
 /* unused harmony export deleteArticles */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return addFavorites; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return deleteFavorites; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getComments; });
-/* unused harmony export publishComment */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return getComments; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return publishComment; });
 /* unused harmony export deleteComment */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return followUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return unfollowUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return favoritePost; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return unfavoritePost; });
 /* harmony import */ var _plugins_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
 /*
  * @Author: Aviator_huahua
  * @Date: 2022-08-15 21:16:45
  * @LastEditors: Aviator_huahua
- * @LastEditTime: 2022-08-21 20:10:02
+ * @LastEditTime: 2022-08-24 21:47:50
  * @Description: 
  */
 
@@ -142,10 +146,15 @@ const getComments = slug => {
  * @return {*}
  */
 
-const publishComment = slug => {
+const publishComment = data => {
   return Object(_plugins_request__WEBPACK_IMPORTED_MODULE_0__[/* request */ "b"])({
-    method: 'DELETE',
-    url: `/api/articles/${slug}/comments`
+    method: 'POST',
+    url: `/api/articles/${data.slug}/comments`,
+    data: {
+      comment: {
+        body: data.comment
+      }
+    }
   });
 };
 /**
@@ -158,6 +167,54 @@ const deleteComment = data => {
   return Object(_plugins_request__WEBPACK_IMPORTED_MODULE_0__[/* request */ "b"])({
     method: 'DELETE',
     url: `/api/articles/${data.slug}/comments/${data.id}`
+  });
+};
+/**
+ * @description: 关注
+ * @param {*} username
+ * @return {*}
+ */
+
+const followUser = username => {
+  return Object(_plugins_request__WEBPACK_IMPORTED_MODULE_0__[/* request */ "b"])({
+    method: 'POST',
+    url: `/api/profiles/${username}/follow`
+  });
+};
+/**
+ * @description: 取消关注
+ * @param {*} username
+ * @return {*}
+ */
+
+const unfollowUser = username => {
+  return Object(_plugins_request__WEBPACK_IMPORTED_MODULE_0__[/* request */ "b"])({
+    method: 'DELETE',
+    url: `/api/profiles/${username}/follow`
+  });
+};
+/**
+ * @description: 点赞
+ * @param {*} slug
+ * @return {*}
+ */
+
+const favoritePost = slug => {
+  return Object(_plugins_request__WEBPACK_IMPORTED_MODULE_0__[/* request */ "b"])({
+    method: 'POST',
+    url: `/api/articles/${slug}/favorite`
+  });
+};
+/**
+ * @description: 取消点赞
+ * @param {*} slug
+ * @return {*}
+ */
+
+const unfavoritePost = slug => {
+  return Object(_plugins_request__WEBPACK_IMPORTED_MODULE_0__[/* request */ "b"])({
+    method: 'DELETE',
+    url: `/api/articles/${slug}/favorite`
   });
 };
 
@@ -343,7 +400,7 @@ var external_vuex_ = __webpack_require__(3);
       tab = "global_feed"
     } = query; // 获取文章列表
 
-    const loadAritcles = store.state.user && tab === "your_feed" ? api_article["c" /* getArticles */] : api_article["f" /* getCommonArticles */];
+    const loadAritcles = store.state.user && tab === "your_feed" ? api_article["e" /* getArticles */] : api_article["h" /* getCommonArticles */];
     const [articleRes, totalRes, tagRes] = await Promise.all([// 获取文章列表
     loadAritcles({
       tag,

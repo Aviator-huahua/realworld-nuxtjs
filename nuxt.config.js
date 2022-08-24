@@ -2,7 +2,7 @@
  * @Author: Aviator_huahua
  * @Date: 2022-08-14 11:28:48
  * @LastEditors: Aviator_huahua
- * @LastEditTime: 2022-08-22 21:28:56
+ * @LastEditTime: 2022-08-24 21:58:50
  * @Description: nuxt配置文件
  */
 module.exports = {
